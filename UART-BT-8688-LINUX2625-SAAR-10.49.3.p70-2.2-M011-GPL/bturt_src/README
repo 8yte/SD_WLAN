@@ -1,0 +1,87 @@
+================================================================================
+		U S E R  M A N U A L  F O R   hci_uart 
+
+NAME
+	hci_uart.ko - driver for bluetooth uart device
+
+Building the driver
+-------------------
+	For X86 platform:
+	Modify ".config" to set "CONFIG_X86=y" or make X86
+	For Moorestown platform:
+	Modify ".config" to set "CONFIG_MOORESTOWN=y" or make MOORESTOWN
+	For PXA9XX platfrom:
+	Modify ".config" to set "CONFIG_PXA9XX=y" or make PXA9XX [2.6.25]
+	For PXA950 platfrom:
+	Modify ".config" to set "CONFIG_PXA950=y" or make PXA950
+	For PXA920 platfrom:
+	Modify ".config" to set "CONFIG_PXA920=y" or make PXA920
+
+	For X86/PXA9XX/.. platform AMP build:
+	Modify ".config" to set "CONFIG_AMP=y" or make X86|PXA9XX|.. [2.6.25] AMP
+
+	make clean
+	make build
+	The binary can be found in ../bin_bturt directory.
+
+Installing the driver
+---------------------
+	make install
+
+Loading the driver
+---------------------
+	insmod hci_uart.ko [wakeupmode=0|1|2]
+
+	0 -- wakeupmode DTR
+	1 -- wakeupmode BREAK
+	2 -- wakeupmode extended BREAK
+	3 -- wakeupmode RTS
+	The default wakeupmode is BREAK.
+
+Get driver ps settings
+----------------------
+    cat /proc/mbt_uart/config
+    This command is used to get the current driver power save settings. 
+
+Enable power save mode
+----------------------
+psmode=[n]
+    This command is used to enable/disable auto sleep mode
+	
+	where the option is:
+			1 	-- Enable auto sleep mode
+			0 	-- Disable auto sleep mode
+	Usage:
+		echo "psmode=1" > /proc/mbt_uart/config		#enable power save mode
+
+		echo "psmode=0" > /proc/mbt_uart/config		#disable power save mode
+
+Configure Inactive Time Interval 
+--------------------------------
+interval=[n]
+    This command is used to change the inactive time interval (mili-second)
+    
+    Usage:
+        echo "interval=2000" > /proc/mbt_uart/config  #set inavtive time interval to 2000 mili-second
+
+Configure wakeup method 	
+-----------------------
+wakeupmode=[n]
+    This command is used to configure wakeup method. This command is only allowed in full power mode. 
+
+    where the option is:
+            0 	-- DTR
+            1 	-- BREAK
+            2   -- extended BREAK
+            3   -- RTS
+     
+    Usage:
+        echo "wakeupmode=0" > /proc/mbt_uart/config  #set wakeup method to DTR
+
+        echo "wakeupmode=1" > /proc/mbt_uart/config  #set wakeup method to BREAK
+    
+        echo "wakeupmode=2" > /proc/mbt_uart/config  #set wakeup method to extended BREAK
+
+        echo "wakeupmode=3" > /proc/mbt_uart/config  #set wakeup method to RTS
+
+================================================================================
